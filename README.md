@@ -2,6 +2,21 @@
 
 A comprehensive supply chain management platform designed for small and medium businesses, connecting vendors and buyers through intelligent matching and streamlined operations.
 
+## 🖼️ UI Showcase
+
+### Main Landing Page
+![Supply Hero Main Page](resources/supply-hero-main.png)
+*Clean, modern landing page with hero section, features overview, and call-to-action*
+
+![Supply Hero Main Page Alternative](resources/supply-hero-main-2.png)
+*Alternative view showcasing the platform's professional design*
+
+### Dashboard Interface
+![Supply Hero Dashboard](resources/supply-hero-dashboard.png)
+*Comprehensive dashboard with real-time analytics, order management, and quick actions*
+
+
+
 ## Architecture Overview
 
 The platform consists of three main layers:

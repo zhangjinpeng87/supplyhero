@@ -80,10 +80,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = async (userData: RegisterData) => {
     try {
+      console.log("Sending registration data:", userData);
       const response = await api.post("/api/auth/register", userData);
       // After successful registration, automatically log in
       await login(userData.username, userData.password);
     } catch (error) {
+      console.error("Registration error:", error);
+      if (error.response?.data?.detail) {
+        console.error("Validation error details:", error.response.data.detail);
+      }
       throw error;
     }
   };
