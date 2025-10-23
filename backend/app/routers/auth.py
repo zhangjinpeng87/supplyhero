@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
-from passlib.context import CryptContext
+from argon2 import PasswordHasher
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 import os
@@ -15,7 +15,7 @@ load_dotenv()
 
 router = APIRouter()
 security = HTTPBearer()
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+ph = PasswordHasher()
 
 # JWT settings
 SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-here")
@@ -23,10 +23,29 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+    try:
+        ph.verify(hashed_password, plain_password)
+        return True
+    except:
+        return False
 
 def get_password_hash(password):
-    return pwd_context.hash(password)
+    # Ensure password is a string
+    if isinstance(password, bytes):
+        password = password.decode('utf-8')
+    
+    # Ensure password is not None or empty
+    if not password:
+        raise ValueError("Password cannot be empty")
+    
+    # Use Argon2 for password hashing
+    try:
+        return ph.hash(password)
+    except Exception as e:
+        print(f"Password hashing error: {e}")
+        print(f"Password type: {type(password)}")
+        print(f"Password value: {repr(password)}")
+        raise
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
@@ -82,7 +101,7 @@ async def register(user: UserCreate, db: Session = Depends(get_db)):
         username=user.username,
         hashed_password=hashed_password,
         full_name=user.full_name,
-        role=user.role
+        role=user.role  # Already a string value due to use_enum_values=True
     )
     db.add(db_user)
     db.commit()

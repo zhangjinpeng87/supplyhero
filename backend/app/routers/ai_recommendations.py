@@ -3,12 +3,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import User, VendorProfile, BuyerProfile, Order
 from app.routers.auth import get_current_user
-import sys
-import os
-
-# Add the ai-models directory to the path
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../..', 'ai-models'))
-from supply_chain_ai import ai_service
+from app.ai_models.supply_chain_ai import ai_service
 
 router = APIRouter()
 

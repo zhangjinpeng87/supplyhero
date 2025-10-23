@@ -1,10 +1,12 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import Optional
 from datetime import datetime
 from app.models import UserRole, OrderStatus, PaymentStatus
 
 # User schemas
 class UserBase(BaseModel):
+    model_config = ConfigDict(use_enum_values=True)
+    
     email: EmailStr
     username: str
     full_name: str
@@ -24,6 +26,7 @@ class UserResponse(UserBase):
     
     class Config:
         from_attributes = True
+        use_enum_values = True
 
 class Token(BaseModel):
     access_token: str

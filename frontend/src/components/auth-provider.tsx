@@ -44,7 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setToken(storedToken);
       // Verify token and get user info
       api.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
-      api.get("/auth/me")
+      api.get("/api/auth/me")
         .then((response) => {
           setUser(response.data);
         })
@@ -63,7 +63,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (username: string, password: string) => {
     try {
-      const response = await api.post("/auth/login", { username, password });
+      const response = await api.post("/api/auth/login", { username, password });
       const { access_token } = response.data;
       
       setToken(access_token);
@@ -71,7 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       api.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
       
       // Get user info
-      const userResponse = await api.get("/auth/me");
+      const userResponse = await api.get("/api/auth/me");
       setUser(userResponse.data);
     } catch (error) {
       throw error;
@@ -80,7 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = async (userData: RegisterData) => {
     try {
-      const response = await api.post("/auth/register", userData);
+      const response = await api.post("/api/auth/register", userData);
       // After successful registration, automatically log in
       await login(userData.username, userData.password);
     } catch (error) {
