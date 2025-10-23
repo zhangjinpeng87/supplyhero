@@ -5,9 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Package, Truck, CreditCard, BarChart3, Users, TrendingUp } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function DashboardPage() {
   const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    router.push("/");
+  };
 
   if (!user) {
     return (
@@ -34,13 +41,17 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-blue-600">Supply Hero</h1>
+              <Link href="/">
+                <h1 className="text-2xl font-bold text-blue-600 hover:text-blue-700 cursor-pointer transition-colors">
+                  Supply Hero
+                </h1>
+              </Link>
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-700">
                 Welcome, {user.full_name}
               </span>
-              <Button onClick={logout} variant="ghost">
+              <Button onClick={handleLogout} variant="ghost">
                 Logout
               </Button>
             </div>
