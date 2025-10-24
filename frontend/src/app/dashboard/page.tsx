@@ -181,7 +181,7 @@ export default function DashboardPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Link href="/dashboard/suppliers">
+                  <Link href="/suppliers">
                     <Button className="w-full">Browse Suppliers</Button>
                   </Link>
                 </CardContent>
