@@ -15,6 +15,10 @@ A comprehensive supply chain management platform designed for small and medium b
 ![Supply Hero Dashboard](resources/supply-hero-dashboard.png)
 *Comprehensive dashboard with real-time analytics, order management, and quick actions*
 
+### AI-Powered Supplier Matching
+![Supply Hero Suppliers](resources/supply-hero-suppliers.png)
+*Intelligent supplier discovery with AI-powered matching scores, ranked by compatibility with buyer profiles*
+
 
 
 ## Architecture Overview
